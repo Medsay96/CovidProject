@@ -8,14 +8,14 @@ ORDER BY 3,4
 
 
 ------------------------------------------------------------------------------------------------------------------
---Selectionner les données qu'on vas utilisé
+--Selectionner les donnÃ©es qu'on vas utilisÃ©
 SELECT location, date, total_cases, new_cases, total_deaths, population
 FROM CovidProject..CovidDeaths$
 ORDER BY 1,2
 
 
 ------------------------------------------------------------------------------------------------------------------
--- Regardez le nombre total de cas par rapport au nombre total de décès
+-- Regardez le nombre total de cas par rapport au nombre total de dÃ©cÃ¨s
 SELECT location, date, total_cases, total_deaths,(cast(total_deaths AS float)/cast(total_cases AS float))*100 AS DeathsPercentage
 FROM CovidProject..CovidDeaths$
 WHERE location LIKE 'morocco'
@@ -23,8 +23,8 @@ ORDER BY 1,2
 
 
 ------------------------------------------------------------------------------------------------------------------
--- En regardant le nombre total de cas par rapport à la population
--- Montre quel pourcentage de la population a contracté le covid
+-- En regardant le nombre total de cas par rapport Ã  la population
+-- Montre quel pourcentage de la population a contractÃ© le covid
 SELECT location, date, total_cases, population,(cast(total_cases AS float)/population)*100 AS PercentPopulationInfect
 FROM CovidProject..CovidDeaths$
 WHERE location = 'morocco'
@@ -32,7 +32,7 @@ ORDER BY 1,2
 
 
 ------------------------------------------------------------------------------------------------------------------
---  En examinant les pays avec le taux d'infection le plus élevé par rapport à la population
+--  En examinant les pays avec le taux d'infection le plus Ã©levÃ© par rapport Ã  la population
 SELECT location, MAX(cast(total_cases AS float)) AS HeightsInfectCount, population,MAX(cast(total_cases AS float)/ population )*100 AS PercentPopulationInfect
 FROM CovidProject..CovidDeaths$
 --WHERE location = 'morocco'
@@ -41,7 +41,7 @@ ORDER BY PercentPopulationInfect DESC
 
 
 ------------------------------------------------------------------------------------------------------------------
--- Montrant les pays avec le plus grand nombre de décès par population
+-- Montrant les pays avec le plus grand nombre de dÃ©cÃ¨s par population
 SELECT location, MAX(cast(total_deaths AS float)) AS TotalDeathsCount
 FROM CovidProject..CovidDeaths$
 WHERE continent IS NOT NULL
@@ -50,7 +50,7 @@ ORDER BY TotalDeathsCount DESC
 
 
 ------------------------------------------------------------------------------------------------------------------
--- Montrant le continent avec le plus grand nombre de décès par population
+-- Montrant le continent avec le plus grand nombre de dÃ©cÃ¨s par population
 SELECT continent, MAX(cast(total_deaths AS float)) AS TotalDeathsCount
 FROM CovidProject..CovidDeaths$
 WHERE continent IS NOT NULL
@@ -68,7 +68,7 @@ ORDER BY 1,2
 
 
 ------------------------------------------------------------------------------------------------------------------
---Regardant la population totale par rapport à la vaccination totale
+--Regardant la population totale par rapport Ã  la vaccination totale
 SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
 ,SUM(CONVERT(float,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date)
 AS RollingPeopleVaccinated
@@ -122,7 +122,7 @@ FROM #PercentPopulationVaccinated
 
 
 ------------------------------------------------------------------------------------------------------------------
---Création d'une vue pour stocker des données
+--CrÃ©ation d'une vue pour stocker des donnÃ©es
 CREATE VIEW PercentPopulationVaccinated AS
 SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
 ,SUM(CONVERT(float,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date)
